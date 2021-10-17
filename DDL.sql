@@ -677,3 +677,18 @@ begin
 end
 go
 
+
+-- 16) Get temperature monthly anomalies between a start and end point for city
+
+create   procedure getAnomaliesForCountry @Country nvarchar(100), @City nvarchar(100), @Start date, @End date
+as
+begin
+
+    delete from ResultChartAnomalies;
+
+    insert into ResultChartAnomalies(anomaly, time)
+    select anomaly, timestamp as time
+    from TemperatureAnomaly T join City C on T.city = C.id join Country C2 on C2.id = C.country
+    where C.name = @City and C2.name = @Country and timestamp >= @Start and timestamp <= @End
+end;
+go
