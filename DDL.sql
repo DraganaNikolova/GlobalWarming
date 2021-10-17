@@ -138,5 +138,17 @@ begin
 end;
 go
 
+create table Continent
+(
+    id int identity primary key,
+    name nvarchar(100)
+)
 
+alter table Country
+	add continent int
+go
 
+alter table Country
+	add constraint Country_Continent_id_fk
+		foreign key (continent) references Continent
+go
